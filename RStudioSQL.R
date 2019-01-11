@@ -279,7 +279,7 @@ colnames(DAILY) <- c("obs","jd","year","mon","day","see","g","s","w","r","silso"
 DAILY$Ymd <- as.Date(paste(DAILY$year, DAILY$mon, DAILY$day, sep = "-"))
 #
 ###### MySQL & RMySQL
-mydb <- dbConnect(MySQL(),user='root',password='antimatter',dbname="gn",
+mydb <- dbConnect(MySQL(),user='root',password='dJj12345',dbname="gn",
 host='localhost')
 #
 dbListTables(mydb)
