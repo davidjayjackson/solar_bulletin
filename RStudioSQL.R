@@ -15,7 +15,8 @@ library(RSQLite)
 library(xtable)
 library("reshape2")
 
-Path <- "C:/Users/Howe/Desktop/SPESI/SSN"
+# Path <- "C:/Users/Howe/Desktop/SPESI/SSN"
+Path <- "C:/Users/davidjayjackson/Documents/GitHub/solar_bulletin"
 setwd(Path)
 (WD <- getwd())
 
