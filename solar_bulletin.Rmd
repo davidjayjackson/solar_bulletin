@@ -5,41 +5,37 @@ date: "January 10, 2019"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include=FALSE,cache=TRUE}
+# knitr::opts_chunk$set(echo = TRUE)
+# library(knitr)
 library(ggplot2)
 library(RMySQL)
 library(data.table)
-```
-```{r }
+
 # Run query againsyt MySQL database "gn"
 mydb <- dbConnect(MySQL(),user='root',password='dJj12345',dbname="gn",
 host='localhost')
 dbListTables(mydb)
-ROD <- dbGetQuery(mydb, "SELECT * FROM daily
-                  WHERE Year >=2009")
-ROD <-as.data.table(ROD)
-ROD$Ymd <- as.Date(ROD$Ymd)
+ROD <- dbGetQuery(mydb, "SELECT jd,s,g,w FROM daily
+                  WHERE Year >=2009 LIMIT 10" )
+
+```
+
+## The quickbrown fox
+
+```{r echo=FALSE,cache=TRUE}
+# ROD <-as.data.table(ROD)
+# ROD$Ymd <-as.Date.character(ROD$Ymd)
+kable(ROD,caption="Daily Sunspot Data")
+
 dbDisconnect(mydb)
 ```
+# Jumped over the lazy dog
+```{r}
+library(ggplot2)
+qplot(ROD$jd,ROD$w)
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r ROD}
-#summary(ROD)
- qplot(ROD$jd,ROD$w)
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
 
-```{r, echo=FALSE}
-qplot(data=ROD,X=Ymd,y=jd)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
