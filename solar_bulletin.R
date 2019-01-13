@@ -26,6 +26,7 @@ dbListTables(mydb)
 dbRemoveTable(mydb,"daily")
 dbWriteTable(mydb, "DAILY", DAILY, row.names = FALSE)
 # Changed Ymd and  w(olf) field types
+dbSendStatement(mydb,"ALTER table daily add column k real")
 dbSendStatement(mydb, "ALTER TABLE DAILY MODIFY COLUMN Ymd date")
 dbSendStatement(mydb, "ALTER TABLE DAILY MODIFY COLUMN w int")
 
