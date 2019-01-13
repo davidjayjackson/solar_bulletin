@@ -1,0 +1,43 @@
+---
+title: "Bookdown"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,connection = "mydb")
+library(RMySQL)
+library(ggplot2)
+
+library(DBI)
+mydb <- dbConnect(MySQL(),user='root',password='dJj12345',dbname="gn",
+host='localhost')
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+# Monthly Observer Data
+```{sql,echo=FALSE,max.print = 15}
+SELECT name,Ymd as Date,g ,s as "Groups" ,w as Wolf ,k FROM daily
+```
+
+## Observer Summary Data
+```{sql, echo=FALSE}
+SELECT name,count(*)as Count FROM daily GROUP BY name
+```
+
+# You can also embed plots, for example:
+```{sql, connection=mydb, output.var="daily"}
+Select * from daily
+```
+```{r}
+qplot(daily$jd,daily$w)
+
+```
+
+
