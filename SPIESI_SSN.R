@@ -20,11 +20,18 @@ library("reshape2")
 # Changed path to davidjayjackson directory 2019-01-12 Djj
 # Or location of *.R or project home
 #
-Path <- "C:/Users/davidjayjackson/Documents/GitHub/SPIESI__SSN"
+# Path <- "C:/Users/davidjayjackson/Documents/GitHub/SPIESI__SSN"
 # Simplied WD assignment
-WD <- setwd(Path)
+# WD <- setwd(Path)
 # (WD <- getwd())
 rm(list=ls())
+# MySql connect statments: DJJ 2018-01-14
+mydb <- dbConnect(MySQL(),user='root',password='dJj12345',dbname="gn",
+                  host='localhost')
+# Import data.frames to db
+#
+dbListTables(mydb)
+
 
 ##########################################################
 #####     Functions
@@ -84,8 +91,10 @@ WriteCSV <- function(RdataSet, CSVfileName) {
 #setwd(path)
 #(WD <- getwd())
 # added fread to import Observation file.
-X <- fread("~/GitHub/SPIESI__SSN/Observations.csv")
+# X <- fread("~/GitHub/SPIESI__SSN/Observations.csv")
 # X <- fetch(Ex,"csv")
+# Import data into data.frame from daily table in db=gn 2018-01-14
+X <- dbGetQuery(mydb,"SELECT * FROM daily ORDER by obs")
 summary(X)
 nrow(X)
 H <- X[,1:10]     # hold current month's raw data
@@ -100,6 +109,7 @@ X <- H
 (Ex <- paste0(Ex,"obsconst"))   # use year matched to monthly data
 X <-fread("~/GitHub/SPIESI__SSN/Observers.csv")
 # X <- fetch(Ex,"csv")
+X <- dbSendQuery(mydb,"SELECT * FROM whom ORDER by Obs")
 names(X) <- c("obs","k","ow","name","silso","updated")
 X$name <- as.character(X$name)
 X$updated <- as.character(X$updated)
