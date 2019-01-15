@@ -11,7 +11,7 @@ library(data.table)
 library(ggplot2)
 library(forecast)
 library(RMySQL)
-library(RSQLite)
+# library(RSQLite)
 library(xtable)
 library("reshape2")
 # Delete old objects.
@@ -94,10 +94,10 @@ WriteCSV <- function(RdataSet, CSVfileName) {
 # X <- fread("~/GitHub/SPIESI__SSN/Observations.csv")
 # X <- fetch(Ex,"csv")
 # Import data into data.frame from daily table in db=gn 2018-01-14
-H<- dbGetQuery(mydb,"SELECT * FROM daily ORDER by obs")
+H <-data.table(H<- dbGetQuery(mydb,"SELECT * FROM daily ORDER by obs"))
 summary(H)
 nrow(H)
-H <- H[,1:10]     # hold current month's raw data
+# H <- H[,1:10]     # hold current month's raw data
 summary(H)
 X <- H
 
@@ -105,11 +105,11 @@ X <- H
 #     Import Obsconst data
 ##########################################################
 
-(fn <- Ex)
-(Ex <- paste0(Ex,"obsconst"))   # use year matched to monthly data
-X <-fread("~/GitHub/SPIESI__SSN/Observers.csv")
+# (fn <- Ex)
+# (Ex <- paste0(Ex,"obsconst"))   # use year matched to monthly data
+# X <-fread("~/GitHub/SPIESI__SSN/Observers.csv")
 # X <g- fetch(Ex,"csv")
-X <- dbGetQuery(mydb,"SELECT * FROM whom ORDER by Obs")
+X <-as.data.table(X <- dbGetQuery(mydb,"SELECT * FROM whom ORDER by Obs"))
 names(X) <- c("obs","k","ow","name","silso","updated")
 X$name <- as.character(X$name)
 X$updated <- as.character(X$updated)
