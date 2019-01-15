@@ -15,21 +15,29 @@ mydb <- dbConnect(MySQL(),user='root',password='dJj12345',dbname="gn",
 host='localhost')
 ```
 
-## R Markdown
+## 2 Sudden Ionospheric Disturbance (SID) Report
+## 2.1 SID Records[PLot]
+## 2.2 SID Observers[table]
+## 2.3 Solar Flare Summary from GOES-15 Data[plot]
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-# Monthly Observer Data
+## 3 Relative Sunspot Numbers Ra
+## 3.1 Raw Sunspot Counts[plot]
+## 3.2 American Relative Sunspot Numbers[daily summary table]  
 ```{sql,echo=FALSE,max.print = 15}
-SELECT name,Ymd as Date,g ,s as "Groups" ,w as Wolf ,k FROM daily
+Select ymd as "Day",count(*) as "Observaions",sum(s) as Spots from daily group by day
 ```
 
-## Observer Summary Data
+## 3.3 Sunspot Observers
 ```{sql, echo=FALSE}
 SELECT name,count(*)as Count FROM daily GROUP BY name
 ```
+
+
+## 3.4 Generalized Linear Model of Sunspot Numbers
+
+
 
 # You can also embed plots, for example:
 ```{sql, connection=mydb, output.var="daily"}
